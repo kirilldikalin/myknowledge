@@ -293,30 +293,30 @@ __del__
 
 **Как вызывать магические методы** 
 
-|Магический метод|	Когда он вызывается (пример)|	Объяснение|
+| **Магический метод |	Когда он вызывается (пример) |	Объяснение** |
 |:---------------------------------|:--------------------------| 
-|__new__(cls [,...])|	instance = MyClass(arg1, arg2) |	__new__ вызывается при создании экземпляра
-|__init__(self [,...])|	instance = MyClass(arg1, arg2) |	__init__ вызывается при создании экземпляра
-|__cmp__(self, other)|	self == other, self > other, etc.	| Вызывается для любого сравнения
-|__pos__(self)|	+self	| Унарный знак плюса
-|__neg__(self)|	-self	| Унарный знак минуса
-|__invert__(self)|	~self	| Побитовая инверсия
-|__index__(self)|	x[self]	| Преобразование, когда объект используется как индекс
-|__nonzero__(self)|	bool(self), if self:	| Булевое значение объекта
-|__getattr__(self, name)|	self.name # name не определено	| Пытаются получить несуществующий атрибут
-|__setattr__(self, name, val)|	self.name = val	| Присвоение любому атрибуту
-|__delattr__(self, name)|	del self.name	| Удаление атрибута
-|__getattribute__(self, name)|	self.name	| Получить любой атрибут
-|__getitem__(self, key)|	self[key]	| Получение элемента через индекс
-|__setitem__(self, key, val)|	self[key] = val	| Присвоение элементу через индекс
-|__delitem__(self, key)|	del self[key]	| Удаление элемента через индекс
-|__iter__(self)|	for x in self	| Итерация
-|__contains__(self, value)|	value in self, value not in self	| Проверка принадлежности с помощью in
-|__call__(self [,...])|	self(args)	| «Вызов» экземпляра
-|__enter__(self)|	with self as x:	| with оператор менеджеров контекста
-|__exit__(self, exc, val, trace)|	with self as x:	| with оператор менеджеров контекста
-|__getstate__(self)|	pickle.dump(pkl_file, self)	| Сериализация
-|__setstate__(self) |	data = pickle.load(pkl_file)	| Сериализация
+| ```__new__(cls [,...])``` |	```instance = MyClass(arg1, arg2)``` |	__new__ вызывается при создании экземпляра |
+| ```__init__(self [,...])``` |	```instance = MyClass(arg1, arg2)``` |	__init__ вызывается при создании экземпляра |
+| ```__cmp__(self, other)``` |	```self == other, self > other, etc.```	| Вызывается для любого сравнения |
+| ```__pos__(self)``` |	```+self```	| Унарный знак плюса |
+| ```__neg__(self)``` |	```-self```	| Унарный знак минуса |
+| ```__invert__(self)``` |	```~self```	| Побитовая инверсия |
+| ```__index__(self)``` |	```x[self]```	| Преобразование, когда объект используется как индекс |
+| ```__nonzero__(self)``` |	```bool(self), if self:```	| Булевое значение объекта |
+| ```__getattr__(self, name)``` |	```self.name # name не определено```	| Пытаются получить несуществующий атрибут |
+| ```__setattr__(self, name, val)``` |	```self.name = val```	| Присвоение любому атрибуту |
+| ```__delattr__(self, name)``` |	```del self.name```	| Удаление атрибута |
+| ```__getattribute__(self, name)``` |	```self.name```	| Получить любой атрибут |
+| ```__getitem__(self, key)``` |	```self[key]```	| Получение элемента через индекс |
+| ```__setitem__(self, key, val)``` |	```self[key] = val```	| Присвоение элементу через индекс |
+| ```__delitem__(self, key)``` |	```del self[key]```	| Удаление элемента через индекс |
+| ```__iter__(self)``` |	```for x in self```	| Итерация |
+| ```__contains__(self, value)``` |	```value in self, value not in self```	| Проверка принадлежности с помощью in |
+| ```__call__(self [,...])``` |	```self(args)```	| «Вызов» экземпляра |
+| ```__enter__(self)``` |	```with self as x:```	| with оператор менеджеров контекста |
+| ```__exit__(self, exc, val, trace)``` |	```with self as x:```	| with оператор менеджеров контекста |
+| ```__getstate__(self)``` |	```pickle.dump(pkl_file, self)```	| Сериализация |
+| ```__setstate__(self)``` |	```data = pickle.load(pkl_file)```	| Сериализация |
 
 ### Что такое миксин?
 
