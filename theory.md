@@ -506,20 +506,89 @@ FROM table;
 ```
 ## Разница между командами DELETE и TRUNCATE
 
-Команда ```DELETE``` — это DML-операция[^DML], которая удаляет записи из таблицы, соответствующие заданному условию:
+Команда ```DELETE``` — это DML-операция, которая удаляет записи из таблицы, соответствующие заданному условию:
 
 ```DELETE FROM table_name WHERE condition;```
 При этом создаются логи удаления, то есть операцию можно отменить.
 
-А вот команда ```TRUNCATE``` — это DDL-операция[^DDL], которая полностью пересоздаёт таблицу, и отменить такое удаление невозможно:
+А вот команда ```TRUNCATE``` — это DDL-операция, которая полностью пересоздаёт таблицу, и отменить такое удаление невозможно:
 
 ```TRUNCATE TABLE table_name;```
 
-[^DML]: [DML] (Data Manipulation Language - язык манипулирования данными. Язык DML позволяет осуществлять манипуляции с данными таблиц, т.е. с ее строками. Он позволяет делать выборку данных из таблиц, добавлять новые данные в таблицы, а так же обновлять и удалять существующие данные.) 
+DML (Data Manipulation Language) - язык манипулирования данными. Язык DML позволяет осуществлять манипуляции с данными таблиц, т.е. с ее строками. Он позволяет делать выборку данных из таблиц, добавлять новые данные в таблицы, а так же обновлять и удалять существующие данные.  
 
-[^DDL]: [DDL] (Data Definition Language - язык описания данных. Язык DDL служит для создания и модификации структуры БД, т.е. для создания/изменения/удаления таблиц и связей.) 
+DDL (Data Definition Language) - язык описания данных. Язык DDL служит для создания и модификации структуры БД, т.е. для создания/изменения/удаления таблиц и связей.
 
 ## Основные команды SQL
+
+* ```SHOW DATABASES```  
+
+  SQL-команда, которая отвечает за просмотр доступных баз данных.
+  
+* ```CREATE DATABASE```  
+  
+  Команда для создания новой базы данных.
+  
+* ```USE```  
+
+  С помощью этой SQL-команды ```USE <database_name>``` выбирается база данных, необходимая для дальнейшей работы с ней.
+  
+* ```SOURCE```  
+
+  ```SOURCE <file.sql>``` позволит выполнить сразу несколько SQL-команд, содержащихся в файле с расширением .sql.
+  
+* ```DROP DATABASE```  
+  
+  Стандартная SQL-команда для удаления целой базы данных.
+  
+* ```DROP TABLE```  
+
+  Так можно удалить всю таблицу целиком.  
+  
+* ```DELETE```  
+
+  SQL-команда ```DELETE FROM <table_name>``` используется для удаления данных из таблицы.
+  
+* ```SHOW TABLES```  
+
+  С помощью этой команды можно увидеть все таблицы, которые доступны в базе данных.
+  
+* ```DESCRIBE```  
+  
+  С помощью ```DESCRIBE <table_name>``` можно просмотреть различные сведения (тип значений, является ключом или нет) о столбцах таблицы.
+  
+* ```CREATE TABLE```
+  SQL-команда для создания новой таблицы:
+  ```
+  CREATE TABLE <table_name1> (
+    <col_name1><col_type1>,
+    <col_name2><col_type2>,
+    <col_name3><col_type3>
+    PRIMARY KEY(<col_name1>),
+    FOREIGN KEY(<col_name2>) REFERENCES <table_name2>(<col_name2>)
+  );
+  ```
+  Ограничения целостности при использовании ```CREATE TABLE```  
+  Может понадобиться создать ограничения для определённых столбцов в таблице. При создании таблицы можно задать следующие ограничения:
+
+  * ячейка таблицы не может иметь значение ```NULL```;
+  * первичный ключ — ```PRIMARY KEY(col_name1, col_name2, …)```;
+  * внешний ключ — ```FOREIGN KEY(col_namex1, …, col_namexn) REFERENCES table_name(col_namex1, …, col_namexn)```.  
+  
+  Можно задать больше одного первичного ключа. В этом случае получится составной первичный ключ.
+
+  Пример
+  Создайте таблицу «instructor»:
+```
+  CREATE TABLE instructor (
+    ID CHAR(5),
+    name VARCHAR(20) NOT NULL,
+    dept_name VARCHAR(20),
+    salary NUMERIC(8,2),
+    PRIMARY KEY (ID),
+    FOREIGN KEY (dept_name) REFERENCES department(dept_name)
+  );
+```
 
 * UNION  
 
@@ -530,6 +599,205 @@ FROM table;
   SELECT column(s) FROM first_table
   UNION
   SELECT column(s) FROM second_table;
+  ```
+  
+* ```INSERT```  
+
+  Команда ```INSERT INTO <table_name>``` в SQL отвечает за добавление данных в таблицу:
+  ```
+  INSERT INTO <table_name> (<col_name1>, <col_name2>, <col_name3>, …)
+    VALUES (<value1>, <value2>, <value3>, …); 
+  ```
+  При добавлении данных в каждый столбец таблицы не требуется указывать названия столбцов.
+  ```
+  INSERT INTO <table_name>
+    VALUES (<value1>, <value2>, <value3>, …);
+  ```
+  
+* ```UPDATE```  
+
+  SQL-команда для обновления данных таблицы:
+  ```
+  UPDATE <table_name>
+    SET <col_name1> = <value1>, <col_name2> = <value2>, ...
+    WHERE <condition>;
+  ```
+  
+* ```SELECT```  
+  
+  ```SELECT``` используется для получения данных из выбранной таблицы:
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>; 
+  ```
+  Следующей командой можно вывести все данные из таблицы:
+  ```
+  SELECT * FROM <table_name>;
+  ```
+  
+* ```SELECT DISTINCT```
+ 
+  В столбцах таблицы могут содержаться повторяющиеся данные. ```SELECT DISTINCT``` используется для получения только неповторяющихся данных.
+  ```
+  SELECT DISTINCT <col_name1>, <col_name2>, …
+    FROM <table_name>; 
+  ```
+
+* ```WHERE```  
+  
+  Можно использовать ключевое слово ```WHERE``` в ```SELECT``` для указания условий в запросе:
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    WHERE <condition>; 
+  ```
+  В запросе можно задавать следующие условия:
+
+  сравнение текста;
+  сравнение численных значений;
+  логические операции AND (и), OR (или) и NOT (отрицание).
+  Пример:
+  ```
+  SELECT * FROM table WHERE author='Достоевский';
+  SELECT * FROM table WHERE price>3000;
+  SELECT * FROM table WHERE amount=10; 
+  ```
+  
+* ```GROUP BY```  
+  
+  Оператор ```GROUP BY``` часто используется с агрегатными функциями, такими как ```COUNT```, ```MAX```, ```MIN```, ```SUM``` и ```AVG```, для группировки выходных значений.
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    GROUP BY <col_namex>; 
+  ```
+  Пример
+  Выведем количество курсов для каждого факультета:
+  ```
+  SELECT COUNT(course_id), dept_name
+    FROM course
+    GROUP BY dept_name; 
+  ```
+  
+* ```HAVING```  
+  
+  Ключевое слово ```HAVING``` было добавлено в SQL по той причине, что ```WHERE``` не может использоваться для работы с агрегатными функциями.
+  ```
+  SELECT <col_name1>, <col_name2>, ...
+    FROM <table_name>
+    GROUP BY <column_namex>
+    HAVING <condition> 
+  ```
+  Пример
+  Выведем список факультетов, у которых более одного курса:
+  ```
+  SELECT COUNT(course_id), dept_name
+    FROM course
+    GROUP BY dept_name
+    HAVING COUNT(course_id)>1; 
+  ```
+  
+* ```ORDER BY```  
+  
+  ```ORDER BY``` используется для сортировки результатов запроса по убыванию или возрастанию. ```ORDER BY``` отсортирует по возрастанию, если не будет указан способ сортировки ```ASC``` или ```DESC```.
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    ORDER BY <col_name1>, <col_name2>, … ASC|DESC;
+  ```
+  Пример
+  Выведем список курсов по возрастанию и убыванию количества кредитов:
+  ```
+  SELECT * FROM course ORDER BY credits;
+  SELECT * FROM course ORDER BY credits DESC;
+  ```
+  
+* ```BETWEEN```  
+
+  ```BETWEEN``` используется для выбора значений данных из определённого промежутка. Могут быть использованы числовые и текстовые значения, а также даты.
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    WHERE <col_namex> BETWEEN <value1> AND <value2>;
+  ```
+  Пример
+  Выведем список инструкторов, чья зарплата больше 50 000, но меньше 100 000:
+  ```
+  SELECT * FROM instructor
+    WHERE salary BETWEEN 50000 AND 100000; 
+  ```
+
+* ```LIKE```  
+
+  Оператор ```LIKE``` используется в ```WHERE```, чтобы задать шаблон поиска похожего значения.
+
+  Есть два свободных оператора, которые используются в ```LIKE```:
+
+  % (ни одного, один или несколько символов);
+  _ (один символ).
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    WHERE <col_namex> LIKE <pattern>; 
+  ```
+  Пример
+  Выведем список курсов, в имени которых содержится «to», и список курсов, название которых начинается с «CS-»:
+  ```
+  SELECT * FROM course WHERE title LIKE ‘%to%’;
+  SELECT * FROM course WHERE course_id LIKE 'CS-___';
+  ```
+
+* ```IN```  
+  
+  С помощью ```IN``` можно указать несколько значений для оператора ```WHERE```:
+  ```
+  SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    WHERE <col_namen> IN (<value1>, <value2>, …);
+  ```
+  Пример
+  Выведем список студентов с направлений Comp. Sci., Physics и Elec. Eng.:
+  ```
+  SELECT * FROM student
+    WHERE dept_name IN (‘Comp. Sci.’, ‘Physics’, ‘Elec. Eng.’);
+  ```
+  
+* ```JOIN```  
+
+  ```JOIN``` используется для связи двух или более таблиц с помощью общих атрибутов внутри них.
+  Чтобы объединить две таблицы в одну, следует использовать оператор ```JOIN```. Соединение таблиц может быть внутренним (```INNER```) или внешним (```OUTER```), причём внешнее соединение может быть левым (```LEFT```), правым (```RIGHT```) или полным (```FULL```).
+
+  * ```INNER JOIN``` — получение записей с одинаковыми значениями в обеих таблицах, т.е. получение пересечения таблиц.
+  * ```FULL OUTER JOIN``` — объединяет записи из обеих таблиц (если условие объединения равно true) и дополняет их всеми записями из обеих таблиц, которые не имеют совпадений. Для записей, которые не имеют совпадений из другой таблицы, недостающее поле будет иметь значение NULL.
+  * ```LEFT JOIN``` — возвращает все записи, удовлетворяющие условию объединения, плюс все оставшиеся записи из внешней (левой) таблицы, которые не удовлетворяют условию объединения.
+  * ```RIGHT JOIN``` — работает точно так же, как и левое объединение, только в качестве внешней таблицы будет использоваться правая.
+  ```
+  SELECT <col_name1>, <col_name2>, …
+  FROM <table_name1>
+  JOIN <table_name2>
+  ON <table_name1.col_namex> = <table2.col_namex>;
+  ```
+  Следующий запрос выбирает все заказы с информацией о клиенте:
+  ```
+  SELECT Orders.OrderID, Customers.CustomerName
+  FROM Orders
+  INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+  ```
+  
+* ```VIEW```  
+  
+  ```VIEW``` — это виртуальная таблица SQL, созданная в результате выполнения выражения. Она содержит строки и столбцы и очень похожа на обычную SQL-таблицу. VIEW всегда показывает самую свежую информацию из базы данных.
+
+  Создание
+  ```
+  CREATE VIEW <view_name> AS
+    SELECT <col_name1>, <col_name2>, …
+    FROM <table_name>
+    WHERE <condition>;
+  ```
+  Удаление
+  ```
+  DROP VIEW <view_name>;
   ```
 
 ## Математические функции в SQL
@@ -545,6 +813,11 @@ FROM table;
 |```RADIANS(x)```|	конвертирует значение x из градусов в радианы	|```RADIANS(180)=3.14...```|
 |```ABS(x)```|	модуль числа x	|```ABS(-1) = 1 ABS(1) = 1```|
 |```PI()```|	pi = 3.1415926...	 ||
+|```COUNT(col_name)```| возвращает количество строк||
+|```SUM(col_name)```| возвращает сумму значений в данном столбце||
+|```AVG(col_name)```| возвращает среднее значение данного столбца||
+|```MIN(col_name)```| возвращает наименьшее значение данного столбца||
+|```MAX(col_name)```| возвращает наибольшее значение данного столбца||
 
 **Оконные функции в SQL**
 
@@ -608,8 +881,8 @@ FROM table;
 
 # Источники
 
-["Как устроен Python. Гид для разработчиков, программистов и интересующихся" Мэтт Харрисон](https://t.me/pythonbooks/389)  
-[Магические методы Rafe Kettler](https://rszalski.github.io/magicmethods/)  
-[Техническая документация по SQL Server](https://docs.microsoft.com/ru-ru/sql/sql-server/?view=sql-server-ver15)  
-[SQL и NoSQL: разбираемся в основных моделях баз данных](https://tproger.ru/translations/sql-nosql-database-models/)  
-[Основные команды SQL, которые должен знать каждый программист](https://tproger.ru/translations/sql-recap/)  
+* ["Как устроен Python. Гид для разработчиков, программистов и интересующихся" Мэтт Харрисон](https://t.me/pythonbooks/389)  
+* [Магические методы Rafe Kettler](https://rszalski.github.io/magicmethods/)  
+* [Техническая документация по SQL Server](https://docs.microsoft.com/ru-ru/sql/sql-server/?view=sql-server-ver15)  
+* [SQL и NoSQL: разбираемся в основных моделях баз данных](https://tproger.ru/translations/sql-nosql-database-models/)  
+* [Основные команды SQL, которые должен знать каждый программист](https://tproger.ru/translations/sql-recap/)  
