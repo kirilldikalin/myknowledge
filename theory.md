@@ -488,5 +488,6 @@ __del__
 
 # Источники
 
-["Как устроен Python. Гид для разработчиков, программистов и интересующихся" Мэтт Харрисон]()
+["Как устроен Python. Гид для разработчиков, программистов и интересующихся" Мэтт Харрисон](https://t.me/pythonbooks/389)
 [Магические методы Rafe Kettler](https://rszalski.github.io/magicmethods/)
+[Техническая документация по SQL Server](https://docs.microsoft.com/ru-ru/sql/sql-server/?view=sql-server-ver15)
