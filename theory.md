@@ -313,8 +313,8 @@ __del__
 | ```__iter__(self)```                  |	```for x in self```	                    | Итерация                                             |
 | ```__contains__(self, value)```       |	```value in self, value not in self```	| Проверка принадлежности с помощью in                 |
 | ```__call__(self [,...])```           |	```self(args)```	                      | «Вызов» экземпляра                                   |
-| ```__enter__(self)```                 |	```with self as x:```	                  | with оператор менеджеров контекста                   |
-| ```__exit__(self, exc, val, trace)``` |	```with self as x:```	                  | with оператор менеджеров контекста                   |
+| ```__enter__(self)```                 |	```with self as x:```	                  | ```with``` оператор менеджеров контекста                   |
+| ```__exit__(self, exc, val, trace)``` |	```with self as x:```	                  | ```with``` оператор менеджеров контекста                   |
 | ```__getstate__(self)```              |	```pickle.dump(pkl_file, self)```	      | Сериализация                                         |
 | ```__setstate__(self)```              |	```data = pickle.load(pkl_file)```	    | Сериализация                                         |
 
@@ -474,4 +474,5 @@ __del__
 
 # Источники
 
+["Как устроен Python. Гид для разработчиков, программистов и интересующихся" Мэтт Харрисон]()
 [Магические методы Rafe Kettler](https://rszalski.github.io/magicmethods/)
