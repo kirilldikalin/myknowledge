@@ -55,7 +55,7 @@
   * [Алгоритмы](#Algorithms)  
   * [Хранение данных](#Data-storage)  
 
-([наверх](sections))
+([наверх](#sections))
 
 ## Разница 2 и 3 версии python
 <a id="Difference-2-and-3-python-version"></a>
@@ -84,7 +84,8 @@
 * [Что такое классы?](#classes)  
 * [Магические методы](#magic-methods)  
 * [Что такое миксин?](#mixin)  
-([наверх](sections))
+
+([наверх](#sections))
 
 ### SOLID
 <a id="SOLID"></a>
