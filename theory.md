@@ -43,7 +43,7 @@
 <br/>
 
 <a id="data-marts"></a>
-# Общие вопросы по python ([наверх](sections))
+# Общие вопросы по python
 <a id="general-python-questions"></a>
   * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
   * [ООП](#oop)  
@@ -55,7 +55,9 @@
   * [Алгоритмы](#Algorithms)  
   * [Хранение данных](#Data-storage)  
 
-## Разница 2 и 3 версии python ([наверх](sections))
+([наверх](sections))
+
+## Разница 2 и 3 версии python
 <a id="Difference-2-and-3-python-version"></a>
 
 В Python 2 print был оператором: ```print "Hello, world"```  
@@ -82,6 +84,7 @@
 * [Что такое классы?](#classes)  
 * [Магические методы](#magic-methods)  
 * [Что такое миксин?](#mixin)  
+([наверх](sections))
 
 ### SOLID
 <a id="SOLID"></a>
@@ -104,6 +107,7 @@ D - Принцип инверсии зависимостей (dependency inversi
 
 ### Что такое классы?
 <a id="classes"></a>
+([наверх](sections))
 
 Класс — тип, описывающий устройство объектов. Объект — это экземпляр класса.
 ```
