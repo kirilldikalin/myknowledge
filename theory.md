@@ -2,49 +2,49 @@
 <a id="sections"></a>
 
 1. [Общие вопросы по python](#general-python-questions)
-  * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
-  * [ООП](#oop)  
+   * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
+   * [ООП](#oop)  
       - [SOLID](#SOLID)  
       - [Что такое классы?](#classes)  
       - [Что такое магические методы?](#magic-methods)  
       - [Что такое миксин?](#mixin) 
-  * [Типы и структуры данных в python](#Types-and-data-structures-in-python)  
+   * [Типы и структуры данных в python](#Types-and-data-structures-in-python)  
       - [Какие типы и структуры данных бывают в python?](#Types-and-data-structures)  
       - [Что такое мутабельные и иммутабельные типы данных?](#mutable-and-immutable-data-types)  
       - [Что может быть в качестве ключа словаря?](#dictionary-key)  
       - [Что такое хеш-функция?](#python-hash)  
       - [В чём особенность словаря в python?](#dictionary-in-python)  
       - [Списки, кортежи и множества в чём их отличие?](#lists-tuples-and-sets) 
-  * [GIL](#GIL) 
+   * [GIL](#GIL) 
       - [Что такое GIL?](#what-is-GIL)  
       - [Многопоточные и многопроцессорные программы в python](#multithreaded-and-multiprocessing-programs-in-python)  
       - [Разница между потоками и процессами](#difference-between-threads-and-processes)  
       - [Что такое условия гонки и потокобезопасность?](#what-are-race-conditions-and-thread-safety)  
       - [Алгоритм планирования доступа потоков к общим данным](#algorithm-for-scheduling-access-of-streams-to-shared-data)  
-  * [GC](#GC)  
+   * [GC](#GC)  
       - [Как в питоне обстоят дела с памятью (управлением памятью)](#memory-management-in-python)  
       - [Сколько стоит проверка элемента в нотации?](#how-much-does-it-cost-to-validate-an-element-in-notation)  
       - [Если есть два объекта и они указывают друг на друга](#two-objects) 
-  * [Итераторы, декораторы и генераторы](#Iterators-decorators-and-generators)  
+   * [Итераторы, декораторы и генераторы](#Iterators-decorators-and-generators)  
       - [Что такое итератор?](#what-is-iterator)  
       - [СЧто такое декоратор?](#what-is-decorator)  
       - [Какие декораторы стандартной библиотеки вы знаете?](#standard-library-decorators) 
       - [Что такое генератор?](what-is-generator)
       - [Что такое list comprehension, какой синтаксис создания генераторов?](list-comprehension)
       - [Является ли range итератором?](is-range-an-iterator)
-  * [Алгоритмы](#Algorithms)  
-  * [Хранение данных](#Data-storage)  
+   * [Алгоритмы](#Algorithms)  
+   * [Хранение данных](#Data-storage)  
 3. [Базы данных](#Database)
 4. [Статистика](#statistics)
 5. [Задачи и алгоритмы машинного обучения](#Machine-learning-tasks-and-algorithms)
 6. [Сеть](#network)
 7. [Big Data](#Big-Data)
-  * [Что такое DWH](#dwh)  
-  * [Data Lake](#data-lake)
-  * [Витрины данных](#data-marts)
-  * [ETL и ETL-запросы](#ETL)
-  * [Что такое Hadoop?](#hadoop)
-  * [Архитектура HDFS](#HDFS-architecture)
+   * [Что такое DWH](#dwh)  
+   * [Data Lake](#data-lake)
+   * [Витрины данных](#data-marts)
+   * [ETL и ETL-запросы](#ETL)
+   * [Что такое Hadoop?](#hadoop)
+   * [Архитектура HDFS](#HDFS-architecture)
 9. [Источники](#sources)
 <br/>
 
@@ -1314,14 +1314,14 @@ _Типы классов_
 ## http
 
 # Big Data
-<a id="big-data"></a>
+<a id="Big-Data"></a>
 
 * [Что такое DWH](#dwh)  
 * [Data Lake](#data-lake)
 * [Витрины данных](#data-marts)
 * [ETL и ETL-запросы](#ETL)
 * [Что такое Hadoop?](#hadoop)
-* [Архитектура HDFS](#HDFS-architecture)
+* [Распределённая файловая система HDFS](#distributed-file-system-HDFS)
 
 ([наверх](#sections))
 
@@ -1525,9 +1525,58 @@ __Масштабирование__
   - Приложение поддерживает добавлние/удаление серверов
   - Просто масштабировать "вниз"
 
+## Распределённая файловая система HDFS
+<a id="distributed-file-system-HDFS"></a>
+* [Архитектура HDFS](#HDFS-architecture)  
+
+([наверх](#sections))
+
 ### Архитектура HDFS
 <a id="HDFS-architecture"></a>
-([наверх](#sections))
+
+HDFS (Hadoop Distributed File System) - это распределённая файловая система в hadoop. Как и любая другая файловая система она служит для хранения данных.
+
+HDFS:
+* Работает на кластере серверов
+* Для пользователя как "Один большой диск"
+* Работает поверх обычных файловых систем (ext3, ext4, XFS)  
+* Не теряет данные если выходят из строя диски или сервера
+
+HDFS подходит для:  
+* Хранения больших данных
+   - Терабайты, петабайты
+   - Миллионы файлов
+   - Файлы размером от 100 Мбэ
+* Стриминга данных
+   - Паттерн "write once / read many times"
+   - Оптимизация под последовательное чтение
+
+HDFS не подходит для:  
+* Low-latency reads
+   - Высокая пропускная способность вместо быстрого доступа к данным
+   - HBase помогает решить эту задачу
+* Большого количество небольших файлов
+   - Лучше миллион больших файлов, чем миллиард маленьких
+* Многопоточная запись
+   - Один процесс записи на файл
+   - данные дописываются в конец файла
+
+__Демоны HDFS__  
+![Демоны HDFS](https://russianblogs.com/images/753/dc2fb07713850c486dd1e421bc6843d9.png)
+
+**Namenode**  
+Отвечает за:
+* Файловое пространство
+* Мета-информацию
+* Расположение блоков файлов  
+Запускается на 1й выделенной машине
+
+**Datanode**  
+Отвечает за:
+* Хранение и передачу блоков данных
+* Отправку сообщений о состоянии на Namenode
+
+Запускается на каждой машине кластера
 
 # Источники
 <a id="sources"></a>
