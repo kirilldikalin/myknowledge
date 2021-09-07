@@ -1,4 +1,5 @@
 # Разделы:
+<a id="sections"></a>
 
 1. [Общие вопросы по python](#general-python-questions)
    * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
@@ -42,7 +43,7 @@
 <br/>
 
 <a id="data-marts"></a>
-# Общие вопросы по python
+# Общие вопросы по python ([наверх](sections))
 <a id="general-python-questions"></a>
   * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
   * [ООП](#oop)  
@@ -54,7 +55,7 @@
   * [Алгоритмы](#Algorithms)  
   * [Хранение данных](#Data-storage)  
 
-## Разница 2 и 3 версии python
+## Разница 2 и 3 версии python ([наверх](sections))
 <a id="Difference-2-and-3-python-version"></a>
 
 В Python 2 print был оператором: ```print "Hello, world"```  
