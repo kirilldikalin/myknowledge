@@ -2560,3 +2560,4 @@ Unified Modeling Language (UML) — унифицированный язык мо
 * [Журнал Mail.ru Cloud Solutions об IT-бизнесе, технологиях и цифровой трансформации](https://mcs.mail.ru/blog/)
 * [Школа больших данных](https://www.bigdataschool.ru/)
 * [Блог компании Тинькофф](https://habr.com/ru/company/tinkoff/profile/)
+* [Блог Хекслета](https://ru.hexlet.io/blog)
