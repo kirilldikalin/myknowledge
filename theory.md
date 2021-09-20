@@ -1,4 +1,4 @@
-# Разделы:
+# Содержание:
 <a id="sections"></a>
 
 * [Общие вопросы по python](#general-python-questions)
