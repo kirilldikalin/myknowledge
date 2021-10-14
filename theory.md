@@ -3309,8 +3309,98 @@ cat - вывод источника в stdout
   - Полезно вывод перенаправить через pipe в less, head, tail и т.д.
   - Получить первые 100 строк из файла: $hdfs dfs -cat /dir/file.tx | head -n 100
 
-text - аналог команды cut
+text - аналог команды cut, который разархивирует архивы
+  
+tail - выводит последние сроки файла
+  $hdfs dfs -cat /dir/file.tx | tail - плохо
+  $hdfs dfs -tail /dir/file.tx - хорошо
+  
+cp - копировать файл из одного места в другое
+  $hdfs dfs -cp /dir/file1 /otherDir/file2
+Подходит только для небольших файлов
+  
+distcp - копирует большие файлы, или много файлов
+  $hdfs dfs -distcp /dir/file1 /otherDir/file2
+  
+mv - перемещения файла
+  $hdfs dfs -mv /dir/file1 /dir2
+  
+put(copyFromLocal) - копирование локального файла в HDFS
+  $hdfs dfs -put loaclfile /dir/file
+  
+get(copyToLocal) - копирование файла bp HDFS в локальную FS 
+  $hdfs dfs -get /dir/file loaclfile
+  
+rm - удалить файл в корзину
+  $hdfs dfs -rm /dir/file
+  
+rm -r - рекурсивно удалить директорию
+  $hdfs dfs -rm -r /dir
+  
+du - размер файла или директории в байтах
+  $hdfs dfs -du /dir
+  
+du -h - размер в удобно читаемом формате
+  $hdfs dfs -du -h /dir
+  
+fsck - проверка некосистентности файловой системы. Показывает проблемы. Не устраняет проблем, только информация. 
+  $hdfs fsck <path>
+  
+dfsadmin - команда для администрирования HDFS
+   $hdfs dfsadmin -<command>
+   $hdfs dfsadmin -report - отображает статистику по HDFS
+   $hdfs dfsadmin -safemode - включение безопасного режима
+  
+balancer - балансирует блоки HDFS по серверам
+ 
+### Java_API
+<a id="Java_API1"></a>  
+  
+Файловая система реализуется в Java Api с помощью абстрактного класса FileSystem
+  org.apache.hadoop.fs.FileSystem
+  Абстракный класс представляет абстрактную фаловую систему
+  Это именно класс, а не интерфейс
+  
+Hadoop представляет несколько конкретных реализаций:
+  * org.apache.hadoop.fs.LocalFileSystem
+  Подходит для нативных FS, использующих локальные диски
+  * org.apache.hadoop.hdfs.DistributedFileSystem
+  Реализация распределённой фаловой системы HDFS
+  * org.apache.hadoop.hdfs.HftpFileSystem
+  Доступ к HDFS в read-only режиме через HTTP
+  * org.apache.hadoop.fs.ftp.FTPFileSystem
+  Файловая система поверх FTP-сервера
+  
+Объект Path представляет файл или директорию
+Path - это URI в FS
+  
+Объект Configuration
+  Объект Configuration хранит конфигурацию сервера и клиента
+  Использует простую парадигму key-value
+  
+## MapReduce
+<a id="MapReduce"></a>
+     * [Парадигма MapReduce](#MapReduce-paradigm)
 
+### Парадигма MapReduce 
+<a id="MapReduce-paradigm"></a> 
+  
+MapReduce - модель распределённых вычислений для обработки больших объёмов данных
+MapReduce - не алгоритм, мы можем говорить, что алгоритмы могут быть реализованы с помощью MapReduce
+MapReduce используется, когда для вычислений не хватает памяти и возникает необходимость проведения паралельных вычислений
+
+Map - обработка данных
+Reduce - свёртка данных
+  
+Схема MapReduce  
+![Схема MapReduce](https://image.slidesharecdn.com/mapreduce-190706072338/95/05-hadoop-mapreduce-mapreduce-2-638.jpg?cb=1562399572)
+  
+Входные данные
+  * Входные данные должны быть разделяемы
+  * Данные в каждом split должны быть независимы
+  * Один воркер обрабатывает один сплит
+  * Воркер запускается там, где лежит его сплит
+  
 # Бизнес
 <a id="business"></a>
 ([наверх](#sections))
