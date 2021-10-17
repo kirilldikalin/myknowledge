@@ -3279,10 +3279,12 @@ Namenode - это едина точка отказа
 ### Shell-команды
 <a id="Shell-commands"></a>
 
+([наверх](#sections))
+
 Для работы с HDFS через командную строку
 
-$hdfs dfs (значит, что будем работать непосредственно с фаловой системой) -<command> -<option><URL>
-$hdfs dfs -ls / (листинг корневой директории)
+```$hdfs dfs (значит, что будем работать непосредственно с фаловой системой) -<command> -<option><URL>```
+```$hdfs dfs -ls / (листинг корневой директории)```
   
 **URI**   
   
@@ -3294,67 +3296,69 @@ hdfs://localhost:8020/user/home
 - либо только path.
   
 Вывод списка команд
-$hdfs dfs - help
+```$hdfs dfs - help```
   
 Информация по командк
-$hdfs dfs - help <command>
+```$hdfs dfs - help <command>```
   
 __Основные команды в shell__
   
-ls - листинг директории и статистика файлов
-mkdir - создать директорию
-  $hdfs dfs -mkdir /data/new_path
-cat - вывод источника в stdout
-  - Весь файл: $hdfs dfs -cat /dir/file.txt
+```ls``` - листинг директории и статистика файлов
+```mkdir``` - создать директорию
+  ```$hdfs dfs -mkdir /data/new_path```
+```cat``` - вывод источника в stdout
+  - Весь файл: ```$hdfs dfs -cat /dir/file.txt```
   - Полезно вывод перенаправить через pipe в less, head, tail и т.д.
-  - Получить первые 100 строк из файла: $hdfs dfs -cat /dir/file.tx | head -n 100
+  - Получить первые 100 строк из файла: ```$hdfs dfs -cat /dir/file.tx | head -n 100```
 
 text - аналог команды cut, который разархивирует архивы
   
-tail - выводит последние сроки файла
-  $hdfs dfs -cat /dir/file.tx | tail - плохо
-  $hdfs dfs -tail /dir/file.tx - хорошо
+```tail``` - выводит последние сроки файла
+  ```$hdfs dfs -cat /dir/file.tx | tail``` - плохо
+  ```$hdfs dfs -tail /dir/file.tx``` - хорошо
   
-cp - копировать файл из одного места в другое
-  $hdfs dfs -cp /dir/file1 /otherDir/file2
+```cp``` - копировать файл из одного места в другое
+  ```$hdfs dfs -cp /dir/file1 /otherDir/file2```
 Подходит только для небольших файлов
   
-distcp - копирует большие файлы, или много файлов
-  $hdfs dfs -distcp /dir/file1 /otherDir/file2
+```distcp``` - копирует большие файлы, или много файлов
+  ```$hdfs dfs -distcp /dir/file1 /otherDir/file2```
   
-mv - перемещения файла
-  $hdfs dfs -mv /dir/file1 /dir2
+```mv``` - перемещения файла
+  ```$hdfs dfs -mv /dir/file1 /dir2```
   
-put(copyFromLocal) - копирование локального файла в HDFS
-  $hdfs dfs -put loaclfile /dir/file
+```put```(copyFromLocal) - копирование локального файла в HDFS
+  ```$hdfs dfs -put loaclfile /dir/file```
   
-get(copyToLocal) - копирование файла bp HDFS в локальную FS 
-  $hdfs dfs -get /dir/file loaclfile
+```get```(copyToLocal) - копирование файла bp HDFS в локальную FS 
+  ```$hdfs dfs -get /dir/file loaclfile```
   
-rm - удалить файл в корзину
-  $hdfs dfs -rm /dir/file
+```rm``` - удалить файл в корзину
+  ```$hdfs dfs -rm /dir/file```
   
-rm -r - рекурсивно удалить директорию
-  $hdfs dfs -rm -r /dir
+```rm -r``` - рекурсивно удалить директорию
+  ```$hdfs dfs -rm -r /dir```
   
-du - размер файла или директории в байтах
-  $hdfs dfs -du /dir
+```du``` - размер файла или директории в байтах
+  ```$hdfs dfs -du /dir```
   
-du -h - размер в удобно читаемом формате
-  $hdfs dfs -du -h /dir
+```du -h``` - размер в удобно читаемом формате
+  ```$hdfs dfs -du -h /dir```
   
-fsck - проверка некосистентности файловой системы. Показывает проблемы. Не устраняет проблем, только информация. 
-  $hdfs fsck <path>
+```fsck``` - проверка некосистентности файловой системы. Показывает проблемы. Не устраняет проблем, только информация. 
+  ```$hdfs fsck <path>```
   
-dfsadmin - команда для администрирования HDFS
-   $hdfs dfsadmin -<command>
-   $hdfs dfsadmin -report - отображает статистику по HDFS
-   $hdfs dfsadmin -safemode - включение безопасного режима
+```dfsadmin``` - команда для администрирования HDFS
+   ```$hdfs dfsadmin -<command>```
+   ```$hdfs dfsadmin -report``` - отображает статистику по HDFS
+   ```$hdfs dfsadmin -safemode``` - включение безопасного режима
   
-balancer - балансирует блоки HDFS по серверам
+```balancer``` - балансирует блоки HDFS по серверам
  
 ### Java_API
 <a id="Java_API1"></a>  
+
+([наверх](#sections))
   
 Файловая система реализуется в Java Api с помощью абстрактного класса FileSystem
   org.apache.hadoop.fs.FileSystem
@@ -3374,13 +3378,29 @@ Hadoop представляет несколько конкретных реал
 Объект Path представляет файл или директорию
 Path - это URI в FS
   
-Объект Configuration
-  Объект Configuration хранит конфигурацию сервера и клиента
-  Использует простую парадигму key-value
+**Объект Configuration**
+  Объект Configuration хранит конфигурацию сервера и клиента  
+  Использует простую парадигму key-value  
+  
+**Чтение данных из файла**  
+  * Создать объект FileSystem  
+  * Открыть InputStream, указывающий на path  
+  * Скопировать данные по байтам используя IOUtils  
+  * Закрыть InputStream  
+  
+**Запись данных в файл**
+  * Создать объект FileSystem  
+  * Открыть OutputStream
+    - Указываем на Path из FileSystem  
+    - Используем FSDataOutputStream
+    - Автоматически создаются все директории в пути, если не существуют
+  * Копируем данные по байтам использую IOUtils
   
 ## MapReduce
 <a id="MapReduce"></a>
      * [Парадигма MapReduce](#MapReduce-paradigm)
+     
+([наверх](#sections))
 
 ### Парадигма MapReduce 
 <a id="MapReduce-paradigm"></a> 
@@ -3395,11 +3415,36 @@ Reduce - свёртка данных
 Схема MapReduce  
 ![Схема MapReduce](https://image.slidesharecdn.com/mapreduce-190706072338/95/05-hadoop-mapreduce-mapreduce-2-638.jpg?cb=1562399572)
   
-Входные данные
+**Входные данные**
   * Входные данные должны быть разделяемы
   * Данные в каждом split должны быть независимы
   * Один воркер обрабатывает один сплит
   * Воркер запускается там, где лежит его сплит
+  
+**Передача данных между Map и Reduce**
+  * Промежуточные данные пишутся на локальный диск, а не в HDFS
+  * Для каждого редьюсера маппер создаёт свой файл с данными
+  * Данные - это пара (Key, Value)
+  * Данные с одним ключом попадают на один редьюсер
+  * Редьюсеры начинают работать после завершения всех мапперов
+  
+![Процесс передачи файлов в MapReduce](https://cdn.edureka.co/blog/wp-content/uploads/2016/11/MapReduce-Way-MapReduce-Tutorial-Edureka.png)  
+
+**Результат MapReduce задачи**
+  * Каждый редьюсер пишет в один файл
+  * Число редьюсеров задаёт пользователь
+  * Данные сохраняются в HDFS
+  * Данные вида Key -> Value
+  * Формат данных определяется пользователем
+
+### Фреймворк MapReduce 
+<a id="MapReduce-framework"></a> 
+
+Фреймворк MapReduce обеспечивает:
+  * Подготовку данных
+  * Запуск всех нужных воркеров
+  * Взаимодействие между маппером и редьюсером
+  * Обработку ошибок
   
 # Бизнес
 <a id="business"></a>
