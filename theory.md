@@ -1,7 +1,7 @@
 # Содержание:
 <a id="sections"></a>
 
-* [Общие вопросы по python](#general-python-questions)
+* [Python](#Python)
    * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
    * [ООП](#oop)  
       - [SOLID](#SOLID)  
@@ -142,16 +142,15 @@
    * [Очереди сообщений](#message-queues)
    * [Что происходит в тот момент, когда вы вводите в адресной строке браузера URL сайта и нажимаете ввод?](#www)
 
-
-
 * [Бизнес](#business)
 
 * [Источники](#sources)
 <br/>
 
-<a id="data-marts"></a>
-# Общие вопросы по python
-<a id="general-python-questions"></a>
+
+
+# Python
+<a id="Python"></a>
   * [Разница 2 и 3 версии python](#Difference-2-and-3-python-version)  
   * [ООП](#oop)  
   * [Типы и структуры данных в python](#Types-and-data-structures-in-python)  
