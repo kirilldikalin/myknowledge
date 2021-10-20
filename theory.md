@@ -55,6 +55,7 @@
    * [Витрины данных](#data-marts)
    * [ETL и ETL-запросы](#ETL)
    * [Разработка ETL-процесса](#ETL-process)
+   * [Элементы ETL-процесса](#Elements of the ETL process)
    * [Что такое Hadoop?](#hadoop)
    * [Data Vault](#data-vault)
    * [Apache Kafka](#Apache-Kafka)
