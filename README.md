@@ -1,8 +1,8 @@
 # myknowledge
 
-Тут я собрал все вопросы (а главное ответы на них) которые мне задали в ходе огромного числа собеседований, начиная с DA, проходя DS и наконец заканчивая DE
+Here I have collected all the questions (and most importantly, the answers to them) that I was asked during a huge number of interviews, starting with DA, going through DS and finally ending with DE
 
-Вопросы и информация по 
+Questions and information on:
 
 * [python](https://github.com/kirilldikalin/myknowledge/blob/main/Python.md)
 * [sql](https://github.com/kirilldikalin/myknowledge/blob/main/SQL.md)
