@@ -31,8 +31,7 @@
   - [Что такое генератор?](#what-is-generator)
   - [Что такое декоратор?](#what-is-decorator)  
   - [Какие декораторы стандартной библиотеки вы знаете?](#standard-library-decorators) 
-  - [Что такое list comprehension, какой синтаксис создания генераторов?](list-comprehension)
-  - [Является ли range итератором?](is-range-an-iterator)
+  - [Что такое list comprehension, какой синтаксис создания генераторов?](#list-comprehension)
 * [Алгоритмы](#Algorithms)  
 
 
