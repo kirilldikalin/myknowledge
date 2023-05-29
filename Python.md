@@ -1521,6 +1521,111 @@ print(shared_counter)  # Результат: 20000
 <a id="types-that-are-supported-by-multiprocessing"></a>
 ([наверх](#sections))
 
+В Python существуют определенные типы данных и структуры, которые поддерживают многопроцессорность. Многопроцессорность в Python достигается с помощью модуля `multiprocessing`, который предоставляет возможность создания и управления процессами. Некоторые из типов данных и структур, поддерживающих многопроцессорность, включают:
+
+1. Разделяемая память (`Shared Memory`):  
+Разделяемая память позволяет разным процессам обмениваться данными, используя общий сегмент памяти. В Python это достигается с использованием класса `Value` из модуля `multiprocessing`.
+
+```py
+from multiprocessing import Process, Value
+
+def increment_counter(counter):
+    counter.value += 1
+
+shared_counter = Value('i', 0)
+
+processes = []
+for _ in range(10):
+    process = Process(target=increment_counter, args=(shared_counter,))
+    processes.append(process)
+    process.start()
+
+for process in processes:
+    process.join()
+
+print(shared_counter.value)  # Результат: 10
+```
+
+В этом примере создается разделяемая переменная `shared_counter` с помощью класса `Value`, и каждый процесс инкрементирует ее значение. Разделяемая переменная позволяет безопасно обмениваться данными между процессами.
+
+2. Очередь (`Queue`):  
+Очереди из модуля `multiprocessing` предоставляют механизм для передачи данных между процессами. Они являются потокобезопасными и обеспечивают правильную синхронизацию доступа к данным.
+
+```py
+from multiprocessing import Process, Queue
+
+def process_queue(queue):
+    while not queue.empty():
+        item = queue.get()
+        # Обработка элемента
+
+shared_queue = Queue()
+shared_queue.put(1)
+shared_queue.put(2)
+
+processes = []
+for _ in range(2):
+    process = Process(target=process_queue, args=(shared_queue,))
+    processes.append(process)
+    process.start()
+
+for process in processes:
+    process.join()
+```
+
+В этом примере создается разделяемая очередь `shared_queue`, которая заполняется элементами. Затем создаются процессы, которые получают элементы из очереди и выполняют обработку.
+
+3. Пул процессов (`Process Pool`):  
+Пул процессов из модуля `multiprocessing` предоставляет возможность создания пула фиксированного количества процессов, которые могут выполнять задачи параллельно. Он предоставляет удобный интерфейс для распределения работы между процессами.
+
+```py
+from multiprocessing import Pool
+
+def square(number):
+    return number ** 2
+
+numbers = [1, 2, 3, 4, 5]
+
+with Pool(processes=2) as pool:
+    result = pool.map(square, numbers)
+
+print(result)  # Результат: [1, 4, 9, 16, 25]
+```
+
+В этом примере используется пул процессов для расчета квадратов чисел из списка `numbers`. map метод пула процессов позволяет распределить задачи между процессами и получить результаты.
+
+4. Блокировки (`Lock`):
+Блокировки из модуля multiprocessing используются для обеспечения безопасного доступа к общим ресурсам из разных процессов. Они позволяют синхронизировать доступ к данным и предотвратить гонки данных (`data races`).
+
+```py
+from multiprocessing import Process, Lock
+
+def increment_counter(counter, lock):
+    lock.acquire()
+    try:
+        counter.value += 1
+    finally:
+        lock.release()
+
+shared_counter = Value('i', 0)
+lock = Lock()
+
+processes = []
+for _ in range(10):
+    process = Process(target=increment_counter, args=(shared_counter, lock))
+    processes.append(process)
+    process.start()
+
+for process in processes:
+    process.join()
+
+print(shared_counter.value)  # Результат: 10
+```
+
+В этом примере создается разделяемая переменная `shared_counter` с помощью класса `Value` и блокировка `lock` с помощью класса `Lock`. Каждый процесс захватывает блокировку перед доступом к общей переменной и освобождает ее после завершения операции.
+
+Таким образом, с использованием модуля `multiprocessing` в Python можно работать с различными типами данных и структурами, обеспечивая многопроцессорность и безопасное взаимодействие между процессами.
+ 
 ## Что такое рекурсия и как она работает в Python?
 <a id="recursion-and-how-it-works"></a>
 ([наверх](#sections))
