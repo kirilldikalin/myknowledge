@@ -1358,10 +1358,8 @@ for item in my_set:
 
 В Python существует несколько способов реализации графов. Рассмотрим два наиболее распространенных: с использованием словаря и с использованием классов.
 
-1. Реализация графов с использованием словаря:
+1. Реализация графов с использованием словаря:  
 В этом подходе мы используем словарь для представления графа, где ключи - это вершины, а значения - это список смежных вершин.
-
-Пример кода:
 
 ```py
 graph = {
@@ -1376,7 +1374,7 @@ graph = {
 
 В этом примере граф содержит вершины от 'A' до 'F', и связи между ними определены в словаре. Например, вершина 'A' имеет смежные вершины 'B' и 'C', вершина 'B' имеет смежные вершины 'C' и 'D', и так далее.
 
-2. Реализация графов с использованием классов:
+2. Реализация графов с использованием классов:  
 В этом подходе мы определяем класс для вершины графа и класс для самого графа. Класс вершины содержит информацию о самой вершине и ее смежных вершинах. Класс графа содержит список вершин и методы для добавления новых вершин и ребер.
 
 Пример кода:
@@ -1417,6 +1415,107 @@ class Graph:
 ## Какие типы данных в Python поддерживаются многопоточностью, и почему?
 <a id="types-that-are-supported-by-multithreading"></a>
 ([наверх](#sections))
+
+В Python существуют несколько типов данных, которые поддерживают многопоточность. Они обеспечивают безопасное взаимодействие между потоками выполнения и позволяют эффективно синхронизировать доступ к общим данным. Ниже перечислены некоторые из таких типов данных:
+
+1. Список (`List`):  
+Списки в Python являются изменяемыми и потокобезопасными структурами данных, благодаря чему могут быть использованы в многопоточных средах. Они могут использоваться для совместного доступа и модификации данных в разных потоках.
+
+```py
+from threading import Thread
+
+def append_to_list(my_list, item):
+    my_list.append(item)
+
+shared_list = []
+thread1 = Thread(target=append_to_list, args=(shared_list, 1))
+thread2 = Thread(target=append_to_list, args=(shared_list, 2))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print(shared_list)  # Результат: [1, 2]
+```
+
+2. Словарь (`Dictionary`):  
+Словари в Python также являются изменяемыми и потокобезопасными структурами данных. Они могут быть использованы для общего доступа к данным в разных потоках.
+
+```py
+from threading import Thread
+
+def update_dictionary(my_dict, key, value):
+    my_dict[key] = value
+
+shared_dict = {}
+thread1 = Thread(target=update_dictionary, args=(shared_dict, 'key1', 'value1'))
+thread2 = Thread(target=update_dictionary, args=(shared_dict, 'key2', 'value2'))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print(shared_dict)  # Результат: {'key1': 'value1', 'key2': 'value2'}
+```
+
+3. Очередь (`Queue`):  
+Модуль `queue` в Python предоставляет потокобезопасные очереди, которые могут использоваться для обмена данными между потоками. Очереди обеспечивают правильную синхронизацию и блокировки при обращении к элементам.
+
+```py
+from queue import Queue
+from threading import Thread
+
+def process_queue(queue):
+    while not queue.empty():
+        item = queue.get()
+        # Обработка элемента
+
+shared_queue = Queue()
+shared_queue.put(1)
+shared_queue.put(2)
+
+thread1 = Thread(target=process_queue, args=(shared_queue,))
+thread2 = Thread(target=process_queue, args=(shared_queue,))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+```
+
+4. Замок (`Lock`):  
+Замки (`Lock`) представляют собой механизм синхронизации, который обеспечивает эксклюзивный доступ к разделяемым данным. Они используются для предотвращения одновременного доступа к данным из нескольких потоков.
+
+```py
+from threading import Thread, Lock
+
+def increment_counter(counter, lock):
+    for _ in range(10000):
+        lock.acquire()
+        counter += 1
+        lock.release()
+
+shared_counter = 0
+lock = Lock()
+
+thread1 = Thread(target=increment_counter, args=(shared_counter, lock))
+thread2 = Thread(target=increment_counter, args=(shared_counter, lock))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print(shared_counter)  # Результат: 20000
+```
+
+Все эти типы данных обеспечивают безопасность потоков и правильную синхронизацию при работе с множественными потоками. Использование подобных структур данных позволяет избежать гонок данных (`data races`) и других проблем, связанных с многопоточностью.
 
 ## Какие типы данных в Python поддерживаются многопроцессорностью, и почему?
 <a id="types-that-are-supported-by-multiprocessing"></a>
