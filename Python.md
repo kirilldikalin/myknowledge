@@ -1967,6 +1967,106 @@ print("Оптимальная расстановка скобок:", optimal_par
 <a id="queue-and-stack-data-structures"></a>
 ([наверх](#sections))
 
+В Python для реализации очередей и стеков существует несколько стандартных структур данных. Рассмотрим основные из них: списки (lists), деки (deques) из модуля `collections` и модуль `queue`.
+
+### Стек (Stack):
+
+Стек - это структура данных, работающая по принципу "последний пришёл, первый ушёл" (Last In, First Out, LIFO). В Python стек можно реализовать с использованием списка или дека.
+
+#### С использованием списка:
+
+```py
+stack_list = []
+
+# Добавление элемента в стек
+stack_list.append(1)
+stack_list.append(2)
+stack_list.append(3)
+
+# Извлечение элемента из стека
+top_element = stack_list.pop()
+
+print(top_element)  # Выведет 3
+```
+
+#### С использованием дека:
+
+```py
+from collections import deque
+
+stack_deque = deque()
+
+# Добавление элемента в стек
+stack_deque.append(1)
+stack_deque.append(2)
+stack_deque.append(3)
+
+# Извлечение элемента из стека
+top_element = stack_deque.pop()
+
+print(top_element)  # Выведет 3
+```
+
+### Очередь (Queue):
+
+Очередь - это структура данных, работающая по принципу "первый пришёл, первый ушёл" (First In, First Out, FIFO).
+
+#### С использованием списка:
+
+```py
+queue_list = []
+
+# Добавление элемента в очередь
+queue_list.append(1)
+queue_list.append(2)
+queue_list.append(3)
+
+# Извлечение элемента из очереди
+first_element = queue_list.pop(0)
+
+print(first_element)  # Выведет 1
+```
+
+#### С использованием дека:
+
+```py
+from collections import deque
+
+queue_deque = deque()
+
+# Добавление элемента в очередь
+queue_deque.append(1)
+queue_deque.append(2)
+queue_deque.append(3)
+
+# Извлечение элемента из очереди
+first_element = queue_deque.popleft()
+
+print(first_element)  # Выведет 1
+```
+
+### Модуль `queue`:
+
+Python также предоставляет модуль `queue`, который содержит классы, реализующие различные типы очередей, такие как `Queue`, `LifoQueue` и `PriorityQueue`. Эти классы обеспечивают безопасный доступ к очереди из нескольких потоков.
+
+Пример использования `Queue` из модуля `queue`:
+
+```py
+from queue import Queue
+
+queue = Queue()
+
+# Добавление элемента в очередь
+queue.put(1)
+queue.put(2)
+queue.put(3)
+
+# Извлечение элемента из очереди
+first_element = queue.get()
+
+print(first_element)  # Выведет 1
+```
+
 ## Какие структуры данных в Python можно использовать для реализации графов, и как они работают?
 <a id="graph-data-structures"></a>
 ([наверх](#sections))
