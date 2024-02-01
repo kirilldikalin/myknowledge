@@ -3885,16 +3885,80 @@ get_data(4)  # Возвращает кэшированный результат
 <a id="memory-consumption-analysis-tools-in-python"></a>
 ([наверх](#sections))
 
+В Python существует несколько инструментов для анализа потребления памяти, которые можно использовать для оптимизации работы приложения. Вот несколько из них:
+
+1. **Модуль `sys`**
+   - **Описание:** Модуль `sys` предоставляет базовую информацию о системе, включая использование памяти.
+   - **Пример:**
+     ```python
+     import sys
+     current_memory_usage = sys.getsizeof(object)
+     ```
+
+2. **`memory_profiler`**
+   - **Описание:** Это сторонний модуль, который позволяет проводить профилирование использования памяти в процессе выполнения кода.
+   - **Пример:**
+     ```python
+     from memory_profiler import profile
+
+     @profile
+     def my_function():
+         # код, который нужно профилировать
+     ```
+
+3. **модуль `tracemalloc`**
+   - **Описание:** Встроенный модуль `tracemalloc` предоставляет возможность отслеживать использование памяти.
+   - **Пример:**
+     ```python
+     import tracemalloc
+
+     tracemalloc.start()
+     # ваш код
+     current_memory = tracemalloc.get_traced_memory()
+     tracemalloc.stop()
+     ```
+
+4. **Библиотека `objgraph`**
+   - **Описание:** Эта библиотека предоставляет инструменты для визуализации объектов и их связей, что может быть полезным при анализе утечек памяти.
+   - **Пример:**
+     ```python
+     import objgraph
+
+     # ваш код
+     objgraph.show_most_common_types()
+     ```
+
+5. **`Py-Spy`**
+   - **Описание:** Независимый профилировщик, который может использоваться для анализа потребления памяти в реальном времени.
+   - **Пример:**
+     ```bash
+     py-spy top -- python your_script.py
+     ```
+
+6. **`cProfile` и `pstats`**
+   - **Описание:** Встроенные модули `cProfile` и `pstats` позволяют профилировать код и анализировать статистику выполнения.
+   - **Пример:**
+     ```python
+     import cProfile
+     import pstats
+
+     pr = cProfile.Profile()
+     pr.enable()
+     # ваш код
+     pr.disable()
+     pr.dump_stats('profile_stats.prof')
+
+     # Анализ статистики
+     stats = pstats.Stats('profile_stats.prof')
+     stats.sort_stats('cumulative').print_stats()
+     ```
+
 ## Как можно определить, что в приложении происходит утечка памяти, и как ее можно исправить?
 <a id="detecting-and-fixing-memory-leaks-in-python"></a>
 ([наверх](#sections))
 
 ## Какие есть альтернативные реализации сборщика мусора для Python, и как они отличаются от стандартной реализации?
 <a id="alternative-garbage-collector-implementations-in-python"></a>
-([наверх](#sections))
-
-## Какие есть инструменты для анализа потребления памяти в Python, и как их можно использовать для оптимизации работы приложения?
-<a id="memory-consumption-analysis-tools-in-python"></a>
 ([наверх](#sections))
 
 ## Как работает механизм "reference counting" в Python, и как он используется для управления памятью?
