@@ -3957,6 +3957,100 @@ get_data(4)  # Возвращает кэшированный результат
 <a id="detecting-and-fixing-memory-leaks-in-python"></a>
 ([наверх](#sections))
 
+Определение утечек памяти в приложении на Python и их исправление - это важный аспект при разработке стабильных и эффективных программ. Вот несколько способов определения утечек памяти и методов их устранения:
+
+### Определение утечек памяти:
+
+1. **Использование инструментов для профилирования:**
+   - **Пример: `memory_profiler`**
+     ```python
+     from memory_profiler import profile
+
+     @profile
+     def your_function():
+         # код вашей функции
+     ```
+
+2. **Использование инструментов анализа:**
+   - **Пример: `Valgrind` (для CPython)**
+     ```
+     valgrind --tool=memcheck python your_script.py
+     ```
+
+3. **Использование встроенных инструментов:**
+   - **Пример: `tracemalloc`**
+     ```python
+     import tracemalloc
+
+     tracemalloc.start()
+
+     # ваш код
+
+     current, peak = tracemalloc.get_traced_memory()
+     print(f"Current memory usage is {current / 10**6}MB; Peak was {peak / 10**6}MB")
+     tracemalloc.stop()
+     ```
+
+### Исправление утечек памяти:
+
+1. **Использование контекстного менеджера для управления ресурсами:**
+   ```python
+   with open('file.txt', 'r') as file:
+       # код обработки файла
+   # файл автоматически закроется даже в случае исключения
+   ```
+
+2. **Освобождение ресурсов явно:**
+   ```python
+   file = open('file.txt', 'r')
+   try:
+       # код обработки файла
+   finally:
+       file.close()
+   ```
+
+3. **Использование сборщика мусора:**
+   - **Пример:**
+     ```python
+     import gc
+
+     gc.collect()  # явное выполнение сборки мусора
+     ```
+
+4. **Использование слабых ссылок:**
+   ```python
+   import weakref
+
+   class MyClass:
+       pass
+
+   obj = MyClass()
+   weak_ref = weakref.ref(obj)
+   ```
+
+5. **Анализ кода с целью выявления циклических зависимостей:**
+   - **Пример:**
+     ```python
+     # Используйте модуль objgraph для визуализации графа объектов
+     import objgraph
+
+     objgraph.show_growth()
+     ```
+
+6. **Оптимизация использования памяти:**
+   - **Пример: Избегайте создания большого числа лишних объектов, используйте генераторы вместо списков и т.д.**
+
+7. **Профилирование кода:**
+   - **Пример: `cProfile`**
+     ```python
+     import cProfile
+
+     def your_function():
+         # ваш код
+
+     cProfile.run('your_function()')
+     ```
+
 ## Какие есть альтернативные реализации сборщика мусора для Python, и как они отличаются от стандартной реализации?
 <a id="alternative-garbage-collector-implementations-in-python"></a>
 ([наверх](#sections))
