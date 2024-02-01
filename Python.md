@@ -3052,6 +3052,79 @@ for thread in threads:
 <a id="measuring-performance-with-gil"></a>
 ([наверх](#sections))
 
+GIL ограничивает выполнение только одного потока Python в одном процессе в любой конкретный момент времени. Это может ограничивать эффективность многопоточных программ на многозадачных системах.
+
+Существует несколько методов для измерения производительности многопоточных программ в Python:
+
+1. **Использование времени выполнения (timeit)**
+
+   Модуль `timeit` предоставляет простой способ измерения времени выполнения блоков кода. Этот модуль позволяет создавать таймеры и измерять время выполнения функций. Пример:
+
+   ```py
+   import timeit
+   from concurrent.futures import ThreadPoolExecutor
+
+   def my_function():
+       # Ваш код
+
+   with ThreadPoolExecutor() as executor:
+       time_taken = timeit.timeit(lambda: executor.submit(my_function).result(), number=10)
+       print(f"Время выполнения: {time_taken} секунд")
+   ```
+
+2. **Использование библиотек для измерения производительности**
+
+   Есть библиотеки, такие как `perf` и `pytest-benchmark`, которые предоставляют расширенные возможности для более точного измерения производительности. Пример с `pytest-benchmark`:
+
+   ```python
+   import pytest
+   from concurrent.futures import ThreadPoolExecutor
+
+   def my_function():
+       # Ваш код
+
+   @pytest.mark.benchmark
+   def test_my_function(benchmark):
+       with ThreadPoolExecutor() as executor:
+           result = benchmark(lambda: executor.submit(my_function).result())
+   ```
+
+3. **Использование профилировщиков**
+
+   Профилировщики, такие как `cProfile` и `line_profiler`, могут помочь выявить узкие места в вашем коде. Профилирование позволяет определить, какие участки кода занимают больше всего времени. Пример с `cProfile`:
+
+   ```python
+   import cProfile
+   from concurrent.futures import ThreadPoolExecutor
+
+   def my_function():
+       # Ваш код
+
+   with ThreadPoolExecutor() as executor:
+       profiler = cProfile.Profile()
+       profiler.enable()
+       result = executor.submit(my_function).result()
+       profiler.disable()
+       profiler.print_stats(sort='cumulative')
+   ```
+
+4. **Использование инструментов анализа памяти**
+
+   Инструменты, такие как `memory_profiler`, могут помочь выявить утечки памяти, что также может повлиять на производительность. Пример:
+
+   ```python
+   from concurrent.futures import ThreadPoolExecutor
+   from memory_profiler import profile
+
+   @profile
+   def my_function():
+       # Ваш код
+
+   with ThreadPoolExecutor() as executor:
+       result = executor.submit(my_function).result()
+   ```
+
+Стоит учитывать, что из-за GIL реальное параллельное выполнение Python-потоков ограничено. В таких случаях можно рассмотреть использование процессов вместо потоков или переходить к асинхронному программированию с использованием `asyncio`.
 
 ## Как использовать процессы в Python для избежания проблем с GIL при работе с многопоточными программами?
 <a id="using-processes-to-avoid-gil-issues"></a>
