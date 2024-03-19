@@ -1,12 +1,13 @@
 # myknowledge
 
-Здесь я собрал все вопросы (а главное ответы на них), которые мне задавали на огромном количестве собеседований, начиная с DA, проходя через DS и заканчивая DE.
+Здесь я собрал все вопросы (а главное ответы на них), которые мне задавали на огромном количестве собеседований, начиная с DA, проходя через DS и DE и заканчивая SD.
 
 Вопросы и информация по:
 
 * [python](https://github.com/kirilldikalin/myknowledge/blob/main/Python.md)
 * [sql](https://github.com/kirilldikalin/myknowledge/blob/main/SQL.md)
 * [bigdata](https://github.com/kirilldikalin/myknowledge/blob/main/BigData.md)
+* [System Design](https://github.com/kirilldikalin/myknowledge/blob/main/SystemDesign.md)
 
 ENG
 
