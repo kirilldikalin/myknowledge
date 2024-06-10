@@ -4885,9 +4885,155 @@ ValueError caught
 
 `yield from` — мощный инструмент в Python, который упрощает работу с вложенными генераторами, делегируя выполнение и обработку значений и исключений. Он позволяет писать более чистый и читаемый код, эффективно управляя сложными потоками данны
 
+
 ## Что такое декораторы классов и как они используются в Python?
 <a id="class-decorators"></a>
 ([наверх](#sections))
+
+Декораторы классов в Python — это специальные функции или другие вызываемые объекты, которые принимают класс в качестве аргумента и возвращают изменённый или новый класс. Они позволяют добавлять функциональность или изменять поведение классов без изменения их исходного кода
+
+#### Основные принципы работы
+
+- **Функция-декоратор**. Функция, которая принимает класс и возвращает класс (или другой объект). 
+- **Аннотация с `@`**. Декораторы применяются к классам с помощью аннотации `@decorator_name` перед объявлением класса.
+
+#### Пример простого декоратора класса
+
+Рассмотрим пример декоратора, который добавляет новый метод к классу:
+
+```py
+def add_method(cls):
+    def new_method(self):
+        return "New method added!"
+    cls.new_method = new_method
+    return cls
+
+@add_method
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+
+# Использование
+obj = MyClass(10)
+print(obj.new_method())  # Выведет "New method added!"
+```
+
+#### Практическое использование декораторов классов
+
+##### Пример 1. Логирование
+
+Декоратор класса может использоваться для логирования вызовов методов:
+
+```py
+def log_methods(cls):
+    for key, value in cls.__dict__.items():
+        if callable(value):
+            original_method = value
+            def new_method(self, *args, **kwargs):
+                print(f"Calling method {original_method.__name__}")
+                return original_method(self, *args, **kwargs)
+            setattr(cls, key, new_method)
+    return cls
+
+@log_methods
+class Example:
+    def method1(self):
+        print("Method1 called")
+    def method2(self):
+        print("Method2 called")
+
+# Использование
+obj = Example()
+obj.method1()
+obj.method2()
+```
+
+Вывод:
+```
+Calling method method1
+Method1 called
+Calling method method2
+Method2 called
+```
+
+##### Пример 2. Регистрация классов
+
+Декоратор может использоваться для регистрации классов в каком-либо реестре:
+
+```py
+registry = {}
+
+def register_class(cls):
+    registry[cls.__name__] = cls
+    return cls
+
+@register_class
+class A:
+    pass
+
+@register_class
+class B:
+    pass
+
+print(registry)
+```
+
+Вывод:
+```
+{'A': <class '__main__.A'>, 'B': <class '__main__.B'>}
+```
+
+#### Взаимодействие с метаклассами
+
+Декораторы классов могут взаимодействовать с метаклассами, добавляя дополнительную функциональность при создании классов
+
+##### Пример использования метаклассов и декораторов
+
+```py
+def my_decorator(cls):
+    class Wrapped(cls):
+        def decorated_method(self):
+            return "This is a decorated method."
+    return Wrapped
+
+class MyMeta(type):
+    def __new__(cls, name, bases, dct):
+        cls_instance = super().__new__(cls, name, bases, dct)
+        return my_decorator(cls_instance)
+
+class MyClass(metaclass=MyMeta):
+    def original_method(self):
+        return "This is an original method."
+
+# Использование
+obj = MyClass()
+print(obj.original_method())  # Выведет "This is an original method."
+print(obj.decorated_method()) # Выведет "This is a decorated method."
+```
+
+#### Комбинирование декораторов
+
+Декораторы классов могут комбинироваться так же, как и декораторы функций, для создания многоуровневой функциональности:
+
+```py
+def decorator1(cls):
+    cls.attr1 = "attribute from decorator1"
+    return cls
+
+def decorator2(cls):
+    cls.attr2 = "attribute from decorator2"
+    return cls
+
+@decorator1
+@decorator2
+class MyClass:
+    pass
+
+print(MyClass.attr1)  # Выведет "attribute from decorator1"
+print(MyClass.attr2)  # Выведет "attribute from decorator2"
+```
+
+Декораторы классов — это мощный инструмент в Python, который позволяет модифицировать или расширять функциональность классов без изменения их исходного кода. Они могут использоваться для различных задач, таких как логирование, регистрация классов, добавление атрибутов и методов, а также для взаимодействия с метаклассами. Декораторы классов обеспечивают гибкость и удобство в управлении поведением классов и помогают писать более чистый и модульный код
 
 ## Как работает механизм функционального программирования в Python, в том числе с использованием lambda-функций и функций высшего порядка?
 <a id="functional-programming-in-python"></a>
