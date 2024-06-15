@@ -85,7 +85,17 @@
   - [Какие существуют ограничения на использование генераторов в Python, в том числе в контексте многопоточной обработки данных?](#limitations-of-generators)
   - [Как можно использовать декораторы для добавления дополнительного функционала к классам и методам в Python?](#decorators-for-classes-and-methods)
   - [Как работает механизм partial-функций в Python и в каких случаях их стоит использовать?](#partial-functions-in-python)
-  - [Алгоритмы](#Algorithms)  
+* [Алгоритмы](#Algorithms)
+  - [Как работает алгоритм быстрой сортировки (quick sort) в Python?](#quick-sort)
+  - [Как работает алгоритм поиска подстроки (substring search) в Python?](#substring-search)
+  - [Как работает алгоритм регулярных выражений (regular expressions) в Python?](#regular-expressions)
+  - [Как работает алгоритм сортировки слиянием (merge sort) в Python?](#merge-sort)
+  - [Какие алгоритмы можно использовать для поиска кратчайшего пути в графе?](#shortest-path-algorithms)
+  - [Как работает алгоритм Дейкстры (Dijkstra's algorithm) в Python?](#dijkstra-algorithm)
+  - [Как работает алгоритм A* (A-star algorithm) в Python?](#a-star-algorithm)
+  - [Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?](#boyer-moore-algorithm)
+  - [Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?](#knuth-morris-pratt-algorithm)
+  - [Как работает алгоритм хеширования SHA-256 в Python?](#sha-256-algorithm)
 
 
 <a id="Python"></a>
@@ -5737,3 +5747,60 @@ print(partial_func.keywords)  # {'b': 2}
 #### Заключение
 
 Partial-функции в Python предоставляют мощный и гибкий способ создания новых функций с предустановленными аргументами. Они упрощают код, делают его более читаемым и удобным для использования, особенно в контексте частого использования одних и тех же аргументов, интеграции с библиотеками, создания функций-фабрик и работы с callback-функциями. Благодаря этим возможностям partial-функции являются ценным инструментом в арсенале любого Python-разработчика
+
+
+
+# Алгоритмы
+<a id="Algorithms"></a>
+([наверх](#sections))
+
+* [Как работает алгоритм быстрой сортировки (quick sort) в Python?](#quick-sort)
+* [Как работает алгоритм поиска подстроки (substring search) в Python?](#substring-search)
+* [Как работает алгоритм регулярных выражений (regular expressions) в Python?](#regular-expressions)
+* [Как работает алгоритм сортировки слиянием (merge sort) в Python?](#merge-sort)
+* [Какие алгоритмы можно использовать для поиска кратчайшего пути в графе?](#shortest-path-algorithms)
+* [Как работает алгоритм Дейкстры (Dijkstra's algorithm) в Python?](#dijkstra-algorithm)
+* [Как работает алгоритм A* (A-star algorithm) в Python?](#a-star-algorithm)
+* [Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?](#boyer-moore-algorithm)
+* [Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?](#knuth-morris-pratt-algorithm)
+* [Как работает алгоритм хеширования SHA-256 в Python?](#sha-256-algorithm)
+
+## Как работает алгоритм быстрой сортировки (quick sort) в Python?
+<a id="quick-sort"></a>
+([наверх](#sections))
+
+## Как работает алгоритм поиска подстроки (substring search) в Python?
+<a id="substring-search"></a>
+([наверх](#sections))
+
+## Как работает алгоритм регулярных выражений (regular expressions) в Python?
+<a id="regular-expressions"></a>
+([наверх](#sections))
+
+## Как работает алгоритм сортировки слиянием (merge sort) в Python?
+<a id="merge-sort"></a>
+([наверх](#sections))
+
+## Какие алгоритмы можно использовать для поиска кратчайшего пути в графе?
+<a id="shortest-path-algorithms"></a>
+([наверх](#sections))
+
+## Как работает алгоритм Дейкстры (Dijkstra's algorithm) в Python?
+<a id="dijkstra-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм A* (A-star algorithm) в Python?
+<a id="a-star-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?
+<a id="boyer-moore-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?
+<a id="knuth-morris-pratt-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм хеширования SHA-256 в Python?
+<a id="sha-256-algorithm"></a>
+([наверх](#sections))
