@@ -5429,6 +5429,196 @@ for thread in threads:
 <a id="decorators-for-classes-and-methods"></a>
 ([наверх](#sections))
 
+Декораторы в Python – это мощный инструмент, позволяющий добавлять дополнительный функционал к функциям, методам и классам. Декораторы оборачивают функции или методы и изменяют или расширяют их поведение. Рассмотрим, как можно использовать декораторы для добавления функционала к классам и методам в Python максимально подробно
+
+#### Декораторы для функций и методов
+
+##### Простейший декоратор
+Декоратор – это функция, которая принимает другую функцию и возвращает новую функцию с добавленным поведением
+
+```py
+def my_decorator(func):
+    def wrapper():
+        print("Что-то происходит до вызова функции.")
+        func()
+        print("Что-то происходит после вызова функции.")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+```
+
+#### Декораторы для методов
+
+Декораторы могут быть использованы для методов класса аналогичным образом. Важно помнить, что методы класса имеют доступ к `self`, который представляет экземпляр класса
+
+##### Пример декоратора для метода класса
+
+```py
+def method_decorator(func):
+    def wrapper(self, *args, **kwargs):
+        print(f"Вызов метода {func.__name__} с аргументами {args} и {kwargs}")
+        result = func(self, *args, **kwargs)
+        print(f"Метод {func.__name__} завершил выполнение")
+        return result
+    return wrapper
+
+class MyClass:
+    @method_decorator
+    def say_hello(self, name):
+        print(f"Hello, {name}!")
+
+obj = MyClass()
+obj.say_hello("Alice")
+```
+
+#### Декораторы для классов
+
+Декораторы могут также применяться к классам. Декоратор класса принимает класс в качестве аргумента и возвращает новый класс с добавленным поведением
+
+##### Пример декоратора для класса
+
+```py
+def class_decorator(cls):
+    class WrappedClass:
+        def __init__(self, *args, **kwargs):
+            self.wrapped = cls(*args, **kwargs)
+        
+        def __getattr__(self, name):
+            return getattr(self.wrapped, name)
+        
+        def new_method(self):
+            print("Это новый метод, добавленный декоратором.")
+    
+    return WrappedClass
+
+@class_decorator
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+    
+    def display(self):
+        print(f"Значение: {self.value}")
+
+obj = MyClass(42)
+obj.display()
+obj.new_method()
+```
+
+#### Применение декораторов для добавления функционала
+
+1. **Логирование**
+
+   Декораторы можно использовать для добавления логирования к методам
+
+```py
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        print(f"Вызов {func.__name__} с аргументами {args} и {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} вернула {result}")
+        return result
+    return wrapper
+
+class Calculator:
+    @log_decorator
+    def add(self, a, b):
+        return a + b
+
+calc = Calculator()
+calc.add(2, 3)
+```
+
+2. **Кэширование**
+
+   Декораторы можно использовать для кэширования результатов вычислений
+
+```py
+def cache_decorator(func):
+    cache = {}
+    def wrapper(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+    return wrapper
+
+class Fibonacci:
+    @cache_decorator
+    def fib(self, n):
+        if n in (0, 1):
+            return n
+        return self.fib(n - 1) + self.fib(n - 2)
+
+fib = Fibonacci()
+print(fib.fib(10))
+```
+
+3. **Проверка прав доступа**
+
+   Декораторы можно использовать для проверки прав доступа перед выполнением метода
+
+```py
+def authorize(roles):
+    def decorator(func):
+        def wrapper(self, *args, **kwargs):
+            if self.role not in roles:
+                raise PermissionError("У вас нет доступа к этому методу")
+            return func(self, *args, **kwargs)
+        return wrapper
+    return decorator
+
+class User:
+    def __init__(self, role):
+        self.role = role
+    
+    @authorize(["admin", "manager"])
+    def admin_task(self):
+        print("Выполнение административной задачи")
+
+admin = User("admin")
+admin.admin_task()
+
+user = User("user")
+user.admin_task()  # Приведет к ошибке PermissionError
+```
+
+4. **Измерение времени выполнения**
+
+   Декораторы можно использовать для измерения времени выполнения методов
+
+```py
+import time
+
+def timing_decorator(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"{func.__name__} заняла {end_time - start_time:.4f} секунд")
+        return result
+    return wrapper
+
+class Processor:
+    @timing_decorator
+    def process(self):
+        time.sleep(2)
+        print("Обработка завершена")
+
+proc = Processor()
+proc.process()
+```
+
+#### Заключение
+
+Декораторы в Python являются мощным инструментом для добавления дополнительного функционала к классам и методам. Они позволяют легко добавлять логирование, кэширование, проверку прав доступа, измерение времени выполнения и многое другое. Декораторы помогают сделать код более модульным и переиспользуемым, что упрощает его поддержку и расширение
+
+
+
 ## Какие методы можно использовать для создания итераторов в Python, кроме определения собственного класса-итератора?
 <a id="methods-for-creating-iterators"></a>
 ([наверх](#sections))
