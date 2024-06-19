@@ -5885,6 +5885,133 @@ print(f"Отсортированный массив: {arr}")
 <a id="substring-search"></a>
 ([наверх](#sections))
 
+Алгоритм поиска подстроки в Python может быть реализован несколькими способами. Один из наиболее распространенных методов — это использование встроенных строковых методов, таких как `find()`, `index()`, `in` и другие. Однако, для более детального понимания алгоритмов поиска подстроки, рассмотрим три классических подхода: наивный алгоритм, алгоритм Кнута-Морриса-Пратта (KMP) и алгоритм Бойера-Мура.
+
+#### 1. Наивный алгоритм поиска подстроки
+
+Наивный алгоритм поиска подстроки — это простейший метод, который проверяет все возможные позиции строки, с которых может начинаться искомая подстрока. Его временная сложность в худшем случае составляет O((n-m+1) * m), где n — длина строки, а m — длина подстроки.
+
+```py
+def naive_search(text, pattern):
+    n = len(text)
+    m = len(pattern)
+    positions = []
+    for i in range(n - m + 1):
+        match = True
+        for j in range(m):
+            if text[i + j] != pattern[j]:
+                match = False
+                break
+        if match:
+            positions.append(i)
+    return positions
+
+text = "abracadabra"
+pattern = "abra"
+print(naive_search(text, pattern))  # Output: [0, 7]
+```
+
+#### 2. Алгоритм Кнута-Морриса-Пратта (KMP)
+
+Алгоритм Кнута-Морриса-Пратта улучшает наивный алгоритм за счет предварительной обработки паттерна, что позволяет избегать повторных проверок уже проверенных символов. KMP использует частичную функцию совпадений (partial match table или prefix function), чтобы пропускать уже проверенные подстроки. Его временная сложность в худшем случае составляет O(n + m)
+
+```py
+def kmp_search(text, pattern):
+    def compute_lps(pattern):
+        lps = [0] * len(pattern)
+        length = 0
+        i = 1
+        while i < len(pattern):
+            if pattern[i] == pattern[length]:
+                length += 1
+                lps[i] = length
+                i += 1
+            else:
+                if length != 0:
+                    length = lps[length - 1]
+                else:
+                    lps[i] = 0
+                    i += 1
+        return lps
+
+    n = len(text)
+    m = len(pattern)
+    lps = compute_lps(pattern)
+    positions = []
+    i = 0
+    j = 0
+    while i < n:
+        if pattern[j] == text[i]:
+            i += 1
+            j += 1
+        if j == m:
+            positions.append(i - j)
+            j = lps[j - 1]
+        elif i < n and pattern[j] != text[i]:
+            if j != 0:
+                j = lps[j - 1]
+            else:
+                i += 1
+    return positions
+
+text = "ababcabcabababd"
+pattern = "ababd"
+print(kmp_search(text, pattern))  # Output: [10]
+```
+
+#### 3. Алгоритм Бойера-Мура
+
+Алгоритм Бойера-Мура оптимизирован для случаев, когда искомая подстрока достаточно длинная. Он использует две эвристики: эвристику плохого символа (bad character heuristic) и эвристику хорошего суффикса (good suffix heuristic). Это позволяет существенно уменьшить количество проверок в худших случаях. Временная сложность в среднем случае приближается к O(n/m), но в худшем случае составляет O(n * m)
+
+```py
+def bad_char_heuristic(pattern):
+    bad_char = [-1] * 256
+    for i in range(len(pattern)):
+        bad_char[ord(pattern[i])] = i
+    return bad_char
+
+def boyer_moore_search(text, pattern):
+    m = len(pattern)
+    n = len(text)
+    bad_char = bad_char_heuristic(pattern)
+    positions = []
+    s = 0
+    while s <= n - m:
+        j = m - 1
+        while j >= 0 and pattern[j] == text[s + j]:
+            j -= 1
+        if j < 0:
+            positions.append(s)
+            s += (m - bad_char[ord(text[s + m])] if s + m < n else 1)
+        else:
+            s += max(1, j - bad_char[ord(text[s + j])])
+    return positions
+
+text = "ABAAABCD"
+pattern = "ABC"
+print(boyer_moore_search(text, pattern))  # Output: [4]
+```
+
+#### Встроенные методы поиска подстроки в Python
+
+Python предоставляет простые в использовании встроенные методы для поиска подстроки:
+
+1. `find(substring)`: Возвращает индекс первого вхождения подстроки или -1, если подстрока не найдена
+2. `index(substring)`: Аналогично `find()`, но вызывает исключение `ValueError`, если подстрока не найдена
+3. Оператор `in`: Проверяет, содержится ли подстрока в строке
+
+```python
+text = "hello world"
+pattern = "world"
+
+print(text.find(pattern))  # Output: 6
+print(text.index(pattern))  # Output: 6
+print(pattern in text)  # Output: True
+```
+
+Эти методы основаны на высокоэффективных алгоритмах и оптимизированы для работы с строками в Python
+
+
 ## Как работает алгоритм регулярных выражений (regular expressions) в Python?
 <a id="regular-expressions"></a>
 ([наверх](#sections))
