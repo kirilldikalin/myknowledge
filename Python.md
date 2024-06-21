@@ -6016,6 +6016,140 @@ print(pattern in text)  # Output: True
 <a id="regular-expressions"></a>
 ([наверх](#sections))
 
+Алгоритм регулярных выражений (regular expressions) в Python реализован с помощью модуля `re`, который предоставляет функции для поиска, сопоставления и манипуляции строковыми данными с использованием регулярных выражений. Давайте рассмотрим, как работают регулярные выражения в Python и какие возможности предоставляет модуль `re`
+
+#### Основные функции модуля `re`
+
+1. **`re.match(pattern, string, flags=0)`**
+   - Проверяет, соответствует ли начало строки заданному шаблону
+   - Возвращает объект `Match` при успешном сопоставлении или `None`, если сопоставление не удалось
+
+2. **`re.search(pattern, string, flags=0)`**
+   - Ищет шаблон в строке и возвращает первое совпадение
+   - Возвращает объект `Match` при успешном сопоставлении или `None`, если сопоставление не удалось
+
+3. **`re.findall(pattern, string, flags=0)`**
+   - Находит все совпадения шаблона в строке
+   - Возвращает список всех найденных совпадений
+
+4. **`re.finditer(pattern, string, flags=0)`**
+   - Находит все совпадения шаблона в строке
+   - Возвращает итератор, генерирующий объекты `Match` для каждого совпадения
+
+5. **`re.sub(pattern, repl, string, count=0, flags=0)`**
+   - Заменяет совпадения шаблона на заданную строку `repl`
+   - Возвращает строку с заменами
+
+6. **`re.split(pattern, string, maxsplit=0, flags=0)`**
+   - Разбивает строку по шаблону
+   - Возвращает список строк
+
+#### Объект `Match`
+
+Объект `Match`, который возвращается функциями `match`, `search` и `finditer`, предоставляет методы для работы с результатами сопоставления:
+- **`group()`** - Возвращает полное совпадение или подгруппу по индексу
+- **`start()`** - Возвращает начальную позицию совпадения
+- **`end()`** - Возвращает конечную позицию совпадения
+- **`span()`** - Возвращает кортеж (start, end), представляющий начальную и конечную позиции совпадения
+
+#### Примеры использования
+
+1. **Поиск совпадения в начале строки**
+
+    ```py
+    import re
+    pattern = r'hello'
+    string = 'hello world'
+    match = re.match(pattern, string)
+    if match:
+        print(f'Found match: {match.group()}')  # Вывод: Found match: hello
+    ```
+
+2. **Поиск первого совпадения в строке**
+
+    ```py
+    import re
+    pattern = r'world'
+    string = 'hello world'
+    match = re.search(pattern, string)
+    if match:
+        print(f'Found match: {match.group()}')  # Вывод: Found match: world
+    ```
+
+3. **Поиск всех совпадений в строке**
+
+    ```py
+    import re
+    pattern = r'\d+'
+    string = '12 drummers drumming, 11 pipers piping, 10 lords a-leaping'
+    matches = re.findall(pattern, string)
+    print(matches)  # Вывод: ['12', '11', '10']
+    ```
+
+4. **Итерация по всем совпадениям**
+
+    ```py
+    import re
+    pattern = r'\d+'
+    string = '12 drummers drumming, 11 pipers piping, 10 lords a-leaping'
+    for match in re.finditer(pattern, string):
+        print(f'Found match: {match.group()} at {match.span()}')
+    ```
+
+5. **Замена совпадений**
+
+    ```py
+    import re
+    pattern = r'\d+'
+    repl = '#'
+    string = '12 drummers drumming, 11 pipers piping, 10 lords a-leaping'
+    new_string = re.sub(pattern, repl, string)
+    print(new_string)  # Вывод: # drummers drumming, # pipers piping, # lords a-leaping
+    ```
+
+6. **Разбиение строки по шаблону**
+
+    ```py
+    import re
+    pattern = r'\s+'
+    string = 'hello   world   wide   web'
+    split_string = re.split(pattern, string)
+    print(split_string)  # Вывод: ['hello', 'world', 'wide', 'web']
+    ```
+
+#### Флаги регулярных выражений
+
+Флаги в модуле `re` позволяют изменять поведение поиска:
+- **`re.IGNORECASE` (или `re.I`)** позволяет игнорировать регистр букв
+- **`re.MULTILINE` (или `re.M`)** включает многострочный режим.
+- **`re.DOTALL` (или `re.S`)**. Точка (`.`) соответствует любому символу, включая новую строку.
+- **`re.VERBOSE` (или `re.X`)** разрешает включать пробелы и комментарии в шаблон для улучшения читаемости.
+
+Пример использования флагов:
+
+```py
+import re
+pattern = r'hello world'
+string = 'HELLO WORLD'
+match = re.search(pattern, string, re.IGNORECASE)
+if match:
+    print(f'Found match: {match.group()}')  # Вывод: Found match: HELLO WORLD
+```
+
+#### Внутренний механизм
+
+Под капотом алгоритм регулярных выражений работает следующим образом:
+
+1. **Компиляция шаблона**. Строка шаблона компилируется в оптимизированное представление
+2. **Поиск и сопоставление**. Алгоритм проходит по строке, пытаясь найти соответствие шаблону
+3. **Возвращение результата**. При нахождении совпадения возвращается объект `Match`, содержащий информацию о совпадении
+
+#### Заключение
+
+Регулярные выражения в Python предоставляют мощные возможности для поиска и обработки текстовых данных. Модуль `re` предлагает разнообразные функции и методы, которые позволяют гибко и эффективно работать с шаблонами и строками
+
+
+
 ## Как работает алгоритм сортировки слиянием (merge sort) в Python?
 <a id="merge-sort"></a>
 ([наверх](#sections))
