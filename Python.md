@@ -6184,7 +6184,7 @@ if match:
 
 Ниже представлен пример реализации алгоритма сортировки слиянием на Python:
 
-```python
+```py
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -6255,6 +6255,14 @@ print(sorted_arr)  # Вывод: [3, 9, 10, 27, 38, 43, 82]
 
 ## Как работает алгоритм A* (A-star algorithm) в Python?
 <a id="a-star-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм Беллмана-Форда (Bellman-Ford Algorithm)?
+<a id="bellman-ford-algorithm"></a>
+([наверх](#sections))
+
+## Как работает алгоритм Флойда-Уоршелла (Floyd-Warshall Algorithm)?
+<a id="floyd-warshall-algorithm"></a>
 ([наверх](#sections))
 
 ## Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?
