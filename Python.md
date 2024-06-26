@@ -6633,6 +6633,117 @@ g.bellman_ford(0)
 <a id="floyd-warshall-algorithm"></a>
 ([наверх](#sections))
 
+Алгоритм Флойда-Уоршелла используется для нахождения кратчайших путей между всеми парами вершин во взвешенном графе с положительными или отрицательными весами рёбер
+
+### Описание алгоритма
+
+1. **Инициализация**
+   - Пусть `dist[i][j]` будет минимальным весом пути из вершины `i` в вершину `j`. Изначально `dist[i][j] = weight[i][j]`, если есть ребро между `i` и `j`, и `dist[i][j] = ∞` (или другая большая константа), если нет прямого ребра
+
+2. **Шаги алгоритма**
+   - Для каждой вершины `k` от 1 до `V` (где `V` — количество вершин):
+     - Обновляем `dist[i][j]` для каждой пары вершин `(i, j)` таким образом:
+
+       $$
+       \text{dist}[i][j] = \min(\text{dist}[i][j], \text{dist}[i][k] + \text{dist}[k][j])
+       $$
+
+     - Это означает, что мы проверяем, можно ли пройти от вершины `i` до вершины `j` через вершину `k` с меньшим весом, чем текущий найденный путь.
+
+3. **Пример работы:**
+
+   Рассмотрим граф с матрицей смежности:
+   $$
+   \begin{bmatrix}
+   0 & \infty & -2 & \infty \\
+   4 & 0 & 3 & \infty \\
+   \infty & \infty & 0 & 2 \\
+   \infty & -1 & \infty & 0
+   \end{bmatrix}
+   $$
+
+   Шаги алгоритма:
+
+   - Первый шаг (к = 1):
+
+     $$
+     \begin{bmatrix}
+     0 & \infty & -2 & \infty \\
+     4 & 0 & 3 & \infty \\
+     \infty & \infty & 0 & 2 \\
+     \infty & -1 & \infty & 0
+     \end{bmatrix}
+     $$
+
+   - Второй шаг (к = 2):
+
+     $$
+     \begin{bmatrix}
+     0 & \infty & -2 & 0 \\
+     4 & 0 & 2 & 4 \\
+     \infty & \infty & 0 & 2 \\
+     3 & -1 & 1 & 0
+     \end{bmatrix}
+     $$
+
+   - Третий шаг (к = 3):
+
+     $$
+     \begin{bmatrix}
+     0 & \infty & -2 & 0 \\
+     4 & 0 & 2 & 4 \\
+     5 & \infty & 0 & 2 \\
+     3 & -1 & 1 & 0
+     \end{bmatrix}
+     $$
+
+   - Четвёртый шаг (к = 4):
+
+     $$
+     \begin{bmatrix}
+     0 & 1 & -2 & 0 \\
+     4 & 0 & 2 & 4 \\
+     3 & 4 & 0 & 2 \\
+     3 & -1 & 1 & 0
+     \end{bmatrix}
+     $$
+
+Алгоритм пошагово находит кратчайшие пути между всеми парами вершин
+
+### Реализация на Python
+
+```py
+def floyd_warshall(graph):
+    V = len(graph)
+    dist = [[float('inf')] * V for _ in range(V)]
+
+    for i in range(V):
+        for j in range(V):
+            dist[i][j] = graph[i][j]
+
+    for k in range(V):
+        for i in range(V):
+            for j in range(V):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+
+    return dist
+
+# Пример использования
+graph = [
+    [0, float('inf'), -2, float('inf')],
+    [4, 0, 3, float('inf')],
+    [float('inf'), float('inf'), 0, 2],
+    [float('inf'), -1, float('inf'), 0]
+]
+
+result = floyd_warshall(graph)
+for row in result:
+    print(row)
+```
+
+Этот код реализует алгоритм Флойда-Уоршелла для заданного графа и выводит матрицу кратчайших путей между всеми парами вершин
+
 ## Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?
 <a id="boyer-moore-algorithm"></a>
 ([наверх](#sections))
