@@ -93,6 +93,8 @@
   - [Какие алгоритмы можно использовать для поиска кратчайшего пути в графе?](#shortest-path-algorithms)
   - [Как работает алгоритм Дейкстры (Dijkstra's algorithm) в Python?](#dijkstra-algorithm)
   - [Как работает алгоритм A* (A-star algorithm) в Python?](#a-star-algorithm)
+  - [Как работает алгоритм Беллмана-Форда?](#bellman-ford-algorithm)
+  - [Как работает алгоритм Флойда-Уоршелла](#floyd-warshall-algorithm)
   - [Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?](#boyer-moore-algorithm)
   - [Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?](#knuth-morris-pratt-algorithm)
   - [Как работает алгоритм хеширования SHA-256 в Python?](#sha-256-algorithm)
@@ -5761,6 +5763,8 @@ Partial-функции в Python предоставляют мощный и ги
 * [Какие алгоритмы можно использовать для поиска кратчайшего пути в графе?](#shortest-path-algorithms)
 * [Как работает алгоритм Дейкстры (Dijkstra's algorithm) в Python?](#dijkstra-algorithm)
 * [Как работает алгоритм A* (A-star algorithm) в Python?](#a-star-algorithm)
+* [Как работает алгоритм Беллмана-Форда?](#bellman-ford-algorithm)
+* [Как работает алгоритм Флойда-Уоршелла](#floyd-warshall-algorithm)
 * [Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?](#boyer-moore-algorithm)
 * [Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?](#knuth-morris-pratt-algorithm)
 * [Как работает алгоритм хеширования SHA-256 в Python?](#sha-256-algorithm)
@@ -6747,6 +6751,65 @@ for row in result:
 ## Как работает алгоритм Бойера-Мура (Boyer-Moore algorithm) в Python для поиска подстроки?
 <a id="boyer-moore-algorithm"></a>
 ([наверх](#sections))
+
+Алгоритм Бойера-Мура (Boyer-Moore) — это эффективный алгоритм для поиска подстроки в строке, который основан на идее сдвига более чем на один символ при несовпадении, и использовании информации о сдвигах символов в шаблоне
+
+### Основные компоненты алгоритма
+
+1. **Предварительная обработка шаблона**
+
+   - **Таблица сдвигов (bad character rule)** -- это основная часть алгоритма, которая определяет, насколько можно сдвинуть шаблон при несовпадении символов. Создается таблица, где для каждого символа из алфавита указывается максимальный сдвиг в шаблоне, если этот символ не совпадает с текущим символом в строке
+
+   ```py
+   def generate_bad_char_table(pattern):
+       table = {}
+       for i in range(len(pattern)):
+           table[pattern[i]] = i
+       return table
+
+   pattern = "example"
+   bad_char_table = generate_bad_char_table(pattern)
+   ```
+
+2. **Поиск с использованием таблицы сдвигов**
+
+   - **Сдвиг по совпадению (good suffix rule)** позволяет ускорить поиск, если в шаблоне есть совпадающие префиксы и суффиксы
+
+   ```py
+   def boyer_moore_search(text, pattern):
+       m = len(pattern)
+       n = len(text)
+       bad_char = generate_bad_char_table(pattern)
+       i = 0
+       while i <= n - m:
+           j = m - 1
+           while j >= 0 and pattern[j] == text[i + j]:
+               j -= 1
+           if j < 0:
+               print("Pattern occurs at index", i)
+               i += (m - bad_char[text[i + m]] if i + m < n else 1)
+           else:
+               i += max(1, j - bad_char.get(text[i + j], -1))
+   
+   text = "here is an example"
+   pattern = "example"
+   boyer_moore_search(text, pattern)
+   ```
+
+### Пример работы алгоритма
+
+Пусть у нас есть текст "here is an example" и мы ищем подстроку "example".
+
+1. **Шаг 1. Поиск с конца шаблона**
+
+   - Сравниваем "example" с "ereh si na elpmaxe".
+   - Несовпадение на последнем символе, используем таблицу сдвигов для определения сдвига.
+
+2. **Шаг 2. Продолжаем сдвигаться до конца текста, пока не найдем или не достигнем конца**
+
+Этот алгоритм эффективен благодаря использованию таблицы сдвигов, которая значительно уменьшает количество необходимых сравнений в случае несовпадения
+
+
 
 ## Как работает алгоритм Кнута-Морриса-Пратта (Knuth-Morris-Pratt algorithm) в Python для поиска подстроки?
 <a id="knuth-morris-pratt-algorithm"></a>
